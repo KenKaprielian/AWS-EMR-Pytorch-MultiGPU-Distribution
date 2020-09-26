@@ -22,7 +22,7 @@ Resources:
       ServiceRole: !Ref emrRole
       ReleaseLabel: Release-1
       VisibleToAllUsers: true
-   emrRole:
+  emrRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:

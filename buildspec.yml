@@ -22,7 +22,7 @@ phases:
               echo stack doesnt exist, create it
               aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile}
             else
-              stack exists but isnt rolled back,  update it
+              echo stack exists but isnt rolled back,  update it
               aws cloudformation update-stack --stack-name ${stackname} --template-body file://${cloudfile}
             fi
           fi

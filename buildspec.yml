@@ -16,7 +16,7 @@ phases:
             echo stack is in ROLLBACK_COMPLETE delete it
             aws cloudformation delete-stack --stack-name ${stackname}
             aws cloudformation wait stack-delete-complete --stack-name ${stackname}
-            aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile}
+            aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile} --capabilities CAPABILITY_IAM
           else            
             if [ "x" == "x${STACK_STATUS}" ]; then
               echo stack doesnt exist, create it

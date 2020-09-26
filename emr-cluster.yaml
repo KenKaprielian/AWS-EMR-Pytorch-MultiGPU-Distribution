@@ -9,15 +9,15 @@ Resources:
           InstanceCount: 1
           InstanceType: c4.large
           Market: ON_DEMAND
-          Name: cfnMaster
+          Name: GPU-Pytorch-Master
         CoreInstanceGroup:
           InstanceCount: 2
           InstanceType: p3.8xlarge
           Market: ON_DEMAND
-          Name: cfnCore
+          Name: GPU-Pytorch-Core
         TerminationProtected: false
-        Ec2SubnetId: subnet-5bd0703d
-      Name: CFNtest
+        Ec2SubnetId: subnet-6399003f
+      Name: GPU-Pytorch-Cluster
       JobFlowRole: !Ref emrEc2InstanceProfile
       ServiceRole: !Ref emrRole
       ReleaseLabel: emr-6.1.0

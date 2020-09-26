@@ -1,0 +1,28 @@
+version: 0.2
+env:
+  variables:
+    stackname: "emr-gpu-cluster"
+    cloudfile: "emr-cluster.yaml"
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  build:
+    commands:
+      - | 
+          STACK_STATUS=$(aws cloudformation describe-stacks --stack-name ${stackname} 2> /dev/null | jq .Stacks | jq .[0] | jq .StackStatus | xargs) 
+          echo $STACK_STATUS
+          if [ "ROLLBACK_COMPLETE" == "${STACK_STATUS}" ]; then
+            echo stack is in ROLLBACK_COMPLETE delete it
+            aws cloudformation delete-stack --stack-name ${stackname}
+            aws cloudformation wait stack-delete-complete --stack-name ${stackname}
+            aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile}
+          else            
+            if [ "x" == "x${STACK_STATUS}" ]; then
+              echo stack doesnt exist, create it
+              aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile}
+            else
+              stack exists but isnt rolled back,  update it
+              aws cloudformation update-stack --stack-name ${stackname} --template-body file://${cloudfile}
+            fi
+          fi

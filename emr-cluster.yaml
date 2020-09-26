@@ -20,7 +20,7 @@ Resources:
       Name: CFNtest
       JobFlowRole: !Ref emrEc2InstanceProfile
       ServiceRole: !Ref emrRole
-      ReleaseLabel: Release-1
+      ReleaseLabel: emr-6.1.0
       VisibleToAllUsers: true
   emrRole:
     Type: AWS::IAM::Role

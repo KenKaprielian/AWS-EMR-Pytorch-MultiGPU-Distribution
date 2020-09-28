@@ -21,9 +21,9 @@ Resources:
             cd nvidia-htop >> /home/ec2-user/cloudlogs
             pip3 install . >> /home/ec2-user/cloudlogs
             cd /opt >> /home/ec2-user/cloudlogs
-            git clone https://github.com/KenKaprielian/AWS-EMR-Pytorch-MultiGPU-Distribution.git >> /home/ec2-user/cloudlogs
+            git clone https://github.com/KenKaprielian/AWS-Pytorch-MultiGPU-Distribution.git >> /home/ec2-user/cloudlogs
 
-            cd AWS-EMR-Pytorch-MultiGPU-Distribution >> /home/ec2-user/cloudlogs
+            cd AWS-Pytorch-MultiGPU-Distribution >> /home/ec2-user/cloudlogs
 
             aws s3 cp s3://kens3bucketmm/deeplearning/data.zip data.zip >> /home/ec2-user/cloudlogs
             unzip data.zip  >> /home/ec2-user/cloudlogs # unzip the ant and bee pictures
@@ -35,6 +35,6 @@ Resources:
             nvidia-smi daemon -t  >> /home/ec2-user/cloudlogs # stop the nvidia-smi log daemon
 
             zip -r nvidia-smi-logs.zip /var/log/nvstats/   >> /home/ec2-user/cloudlogs # zip smi the logs up
-            zip -r gpu-logs.zip /opt/AWS-EMR-Pytorch-MultiGPU-Distribution/gpulog*   >> /home/ec2-user/cloudlogs # zip the h top gpu logs up
+            zip -r gpu-logs.zip /opt/AWS-Pytorch-MultiGPU-Distribution/gpulog*   >> /home/ec2-user/cloudlogs # zip the h top gpu logs up
             aws s3 cp  nvidia-smi-logs.zip s3://kens3bucketmm/deeplearning/nvidia-smi-logs.zip  >> /home/ec2-user/cloudlogs # send the logs to S3 for safekeeping, as this instance will be terminated
             aws s3 cp  gpu-logs.zip s3://kens3bucketmm/deeplearning/gpu-logs.zip >> /home/ec2-user/cloudlogs

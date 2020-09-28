@@ -12,6 +12,13 @@ git clone https://github.com/KenKaprielian/AWS-EMR-Pytorch-MultiGPU-Distribution
 cd AWS-EMR-Pytorch-MultiGPU-Distribution
 
 aws s3 cp s3://kens3bucketmm/deeplearning/data.zip data.zip
-unzip data.zip
+unzip data.zip # unzip the ant and bee pictures
 
-python3 pytorch.py
+nvidia-smi daemon -d 1 # start the nvidia-smi log daemo with a 1 second interval
+
+python3 pytorch.py # start training
+
+nvidia-smi daemon -t # stop the nvidia-smi log daemon
+
+zip -r nvidia-smi-logs.zip /var/log/nvstats/  # zip the logs up
+aws s3 cp  nvidia-smi-logs.zip s3://kens3bucketmm/deeplearning/nvidia-smi-logs.zip # send the logs to S3 for safekeeping, as this instance will be terminated

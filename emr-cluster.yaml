@@ -3,7 +3,6 @@ Resources:
   emrpytorchgpucluster:
     Type: AWS::EMR::Cluster
     Properties:
-      EbsRootVolumeSize: 20
       CustomAmiId: ami-0994f630ee26a4ce7
       Instances:
         MasterInstanceGroup:

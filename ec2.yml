@@ -1,5 +1,7 @@
-EC2GPUInstance: 
-  Type: AWS::EC2::Instance
-  Properties: 
-    ImageId: "ami-0994f630ee26a4ce7"
-    KeyName: "ec2awskey"
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  EC2GPUInstance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0994f630ee26a4ce7"
+      KeyName: "ec2awskey"

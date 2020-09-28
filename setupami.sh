@@ -6,7 +6,10 @@ source activate pytorch_latest_p36
 cd /opt
 mkdir nn
 cd nn
-
+git clone https://github.com/peci1/nvidia-htop
+cd nvidia-htop
+pip3 install .
+cd /opt
 git clone https://github.com/KenKaprielian/AWS-EMR-Pytorch-MultiGPU-Distribution.git
 
 cd AWS-EMR-Pytorch-MultiGPU-Distribution
@@ -20,5 +23,7 @@ python3 pytorch.py # start training
 
 nvidia-smi daemon -t # stop the nvidia-smi log daemon
 
-zip -r nvidia-smi-logs.zip /var/log/nvstats/  # zip the logs up
+zip -r nvidia-smi-logs.zip /var/log/nvstats/  # zip smi the logs up
+zip -r gpu-logs.zip /opt/AWS-EMR-Pytorch-MultiGPU-Distribution/gpulog*  # zip the h top gpu logs up
 aws s3 cp  nvidia-smi-logs.zip s3://kens3bucketmm/deeplearning/nvidia-smi-logs.zip # send the logs to S3 for safekeeping, as this instance will be terminated
+aws s3 cp  gpu-logs.zip s3://kens3bucketmm/deeplearning/gpu-logs.zip

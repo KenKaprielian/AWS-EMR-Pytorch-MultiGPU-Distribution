@@ -14,6 +14,30 @@ import matplotlib.pyplot as plt
 import time
 import os
 import copy
+from threading import Thread
+import datetime
+
+logdate = datetime.datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
+print(logdate)
+class Monitor(Thread):
+    def __init__(self, delay):
+        super(Monitor, self).__init__()
+        self.stopped = False
+        self.delay = delay # Time between calls to GPUtil
+        self.start()
+
+    def run(self):
+        while not self.stopped:
+            cmd = 'nvidia-smi >> gpulog-' + logdate
+            os.system(cmd)
+			
+            time.sleep(self.delay)
+
+    def stop(self):
+        self.stopped = True
+        
+# Instantiate monitor with a 10-second delay between updates
+monitor = Monitor(1)
 
 plt.ion()   # interactive mode
 
@@ -160,4 +184,4 @@ if __name__ == "__main__":
 
 	model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
 						   num_epochs=3)
-
+monitor.stop()

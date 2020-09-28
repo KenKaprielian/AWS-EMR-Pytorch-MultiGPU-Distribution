@@ -3,6 +3,8 @@ env:
   variables:
     stackname: "ec2-gpu-roles"
     cloudfile: "ec2-roles.yml"
+    stackname1: "ec2-gpu"
+    cloudfile1: "ec2.yml"
 phases:
   install:
     runtime-versions:
@@ -24,5 +26,21 @@ phases:
             else
               echo stack exists but isnt rolled back,  update it
               aws cloudformation update-stack --stack-name ${stackname} --template-body file://${cloudfile} --capabilities CAPABILITY_IAM
+            fi
+          fi
+          STACK_STATUS=$(aws cloudformation describe-stacks --stack-name ${stackname1} 2> /dev/null | jq .Stacks | jq .[0] | jq .StackStatus | xargs) 
+          echo $STACK_STATUS
+          if [ "ROLLBACK_COMPLETE" == "${STACK_STATUS}" ]; then
+            echo stack is in ROLLBACK_COMPLETE delete it
+            aws cloudformation delete-stack --stack-name ${stackname1}
+            aws cloudformation wait stack-delete-complete --stack-name ${stackname1}
+            aws cloudformation create-stack --stack-name ${stackname1} --template-body file://${cloudfile1} --capabilities CAPABILITY_IAM
+          else            
+            if [ "x" == "x${STACK_STATUS}" ]; then
+              echo stack doesnt exist, create it
+              aws cloudformation create-stack --stack-name ${stackname1} --template-body file://${cloudfile1} --capabilities CAPABILITY_IAM
+            else
+              echo stack exists but isnt rolled back,  update it
+              aws cloudformation update-stack --stack-name ${stackname1} --template-body file://${cloudfile1} --capabilities CAPABILITY_IAM
             fi
           fi

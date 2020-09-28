@@ -4,6 +4,7 @@ Resources:
     Type: AWS::EMR::Cluster
     Properties:
       EbsRootVolumeSize: 20
+      CustomAmiId: ami-0994f630ee26a4ce7
       Instances:
         MasterInstanceGroup:
           InstanceCount: 1
@@ -11,8 +12,8 @@ Resources:
           Market: ON_DEMAND
           Name: GPU-Pytorch-Master
         CoreInstanceGroup:
-          InstanceCount: 2
-          InstanceType: p3.8xlarge
+          InstanceCount: 1
+          InstanceType: c4.large
           Market: ON_DEMAND
           Name: GPU-Pytorch-Core
         TerminationProtected: false

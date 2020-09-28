@@ -28,7 +28,7 @@ class Monitor(Thread):
 
     def run(self):
         while not self.stopped:
-            cmd = 'nvidia-smi >> gpulog-' + logdate
+            cmd = 'nvidia-htop.py >> gpulog-' + logdate # more detailed nivida-smi logger, written by https://github.com/peci1/nvidia-htop
             os.system(cmd)
 			
             time.sleep(self.delay)

@@ -1,8 +1,9 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  Ec2Role:
+  Ec2GpuRole:
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: Ec2GpuRole
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -26,4 +27,5 @@ Resources:
     Properties:
       Path: /
       Roles:
-        - !Ref Ec2Role
+        - !Ref Ec2GpuRole
+      InstanceProfileName: Ec2GpuInstanceProfile

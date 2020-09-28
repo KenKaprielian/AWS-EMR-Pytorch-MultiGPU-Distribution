@@ -4,7 +4,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties: 
       ImageId: ami-0994f630ee26a4ce7	  
-      InstanceType: p2.xlarge
+      InstanceType: p2.8xlarge
       IamInstanceProfile: Ec2GpuInstanceProfile
       KeyName: ec2awskey
       UserData:

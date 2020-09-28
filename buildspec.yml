@@ -19,10 +19,12 @@ phases:
             aws cloudformation delete-stack --stack-name ${stackname}
             aws cloudformation wait stack-delete-complete --stack-name ${stackname}
             aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile} --capabilities CAPABILITY_NAMED_IAM
+            aws cloudformation wait stack-create-complete --stack-name ${stackname}
           else            
             if [ "x" == "x${STACK_STATUS}" ]; then
               echo stack doesnt exist, create it
               aws cloudformation create-stack --stack-name ${stackname} --template-body file://${cloudfile} --capabilities CAPABILITY_NAMED_IAM
+              aws cloudformation wait stack-create-complete --stack-name ${stackname}
             else
               echo stack exists but isnt rolled back,  update it
               aws cloudformation update-stack --stack-name ${stackname} --template-body file://${cloudfile} --capabilities CAPABILITY_NAMED_IAM

@@ -1,8 +1,8 @@
 version: 0.2
 env:
   variables:
-    stackname: "emr-gpu-cluster"
-    cloudfile: "emr-cluster.yaml"
+    stackname: "ec2-gpu-roles"
+    cloudfile: "ec2-roles.yml"
 phases:
   install:
     runtime-versions:
